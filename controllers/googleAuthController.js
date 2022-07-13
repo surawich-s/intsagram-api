@@ -3,18 +3,18 @@ require("../auth");
 const passport = require("passport");
 
 exports.googleLogin = passport.authenticate("google", {
-  scope: ["email", "profile"],
+    scope: ["email", "profile"],
 });
 
 exports.googleLoginCallback = passport.authenticate("google", {
-  successRedirect: "http://localhost:3000",
-  failureRedirect: "http://localhost:3000",
+    successRedirect: process.env.URL,
+    failureRedirect: process.env.URL,
 });
 
 exports.googleLogout = async (req, res) => {
-  req.logout();
-  await req.session.destroy();
-  res.status(200).json({
-    message: "Logged out successfully",
-  });
+    req.logout();
+    await req.session.destroy();
+    res.status(200).json({
+        message: "Logged out successfully",
+    });
 };
