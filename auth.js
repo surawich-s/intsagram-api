@@ -15,7 +15,7 @@ passport.use(
             passReqToCallback: true,
         },
         async function (request, accessToken, refreshToken, profile, done) {
-            // console.log(profile._json);
+            console.log(profile._json);
             const { email, name, picture } = await profile._json;
             await User.findOne({ email: email }, async (err, user) => {
                 if (err) throw err;

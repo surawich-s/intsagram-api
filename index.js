@@ -49,7 +49,7 @@ function isLoggedIn(req, res, next) {
     req.user ? next() : res.sendStatus(401);
 }
 
-app.use("/api/v1/", userRoutes);
+app.use("/api/v1", userRoutes);
 app.use("/api/v1/posts", isLoggedIn, postRoutes);
 
 app.listen(PORT, () => {
