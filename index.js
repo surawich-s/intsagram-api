@@ -16,6 +16,7 @@ const PORT = process.env.PORT || 5000;
 app.use(express.json({ limit: "50mb" }));
 app.use(express.urlencoded({ limit: "50mb", extended: true }));
 app.use(cors({ origin: process.env.URL, credentials: true }));
+app.set('trust proxy', 1) // trust first proxy
 
 mongoose
     .connect(process.env.CONNECTION_URL, {
@@ -29,7 +30,7 @@ mongoose.set("useFindAndModify", false);
 
 const store = new MongoDBSession({
     uri: process.env.CONNECTION_URL,
-    collections: "mySessions",
+    collections: "sessions",
 });
 
 const sessionMiddleware = session({
@@ -37,9 +38,8 @@ const sessionMiddleware = session({
     resave: false,
     saveUninitialized: false,
     store: store,
+    cookie: { secure: true }
 });
-
-app.use(sessionMiddleware);
 
 app.use(sessionMiddleware);
 app.use(passport.initialize());
